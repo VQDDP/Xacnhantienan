@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +10,7 @@
         th { background-color: #f4f4f4; }
         .paid { background-color: #c8e6c9; }
         .unpaid { background-color: #ffcdd2; }
-        button { padding: 5px 10px; cursor: pointer; }
+        button { padding: 5px 10px; cursor: pointer; margin-right: 4px; }
         .history { margin-top: 40px; }
     </style>
 </head>
@@ -67,7 +66,11 @@
                 <td>${food}</td>
                 <td>${price} VND</td>
                 <td class="unpaid">Chưa thanh toán</td>
-                <td><button onclick="markPaid(this)">Đã thanh toán</button></td>
+                <td>
+                    <button onclick="markPaid(this)">Đã thanh toán</button>
+                    <button onclick="editOrder(this)">Sửa</button>
+                    <button onclick="deleteOrder(this)">Xóa</button>
+                </td>
             `;
 
             const history = document.getElementById("history-list");
@@ -86,6 +89,24 @@
             row.cells[3].innerText = "Đã thanh toán";
             row.cells[3].className = "paid";
             button.remove();
+        }
+
+        function deleteOrder(button) {
+            const row = button.parentElement.parentElement;
+            row.remove();
+        }
+
+        function editOrder(button) {
+            const row = button.parentElement.parentElement;
+            const name = row.cells[0].innerText;
+            const food = row.cells[1].innerText;
+            const price = row.cells[2].innerText.replace(" VND", "");
+
+            document.getElementById("name").value = name;
+            document.getElementById("food").value = food;
+            document.getElementById("price").value = price;
+
+            deleteOrder(button);
         }
     </script>
 </body>
